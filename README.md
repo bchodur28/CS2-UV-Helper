@@ -3,24 +3,41 @@
 This repository contains a simple Blender addon written in Python that performs three operations (with the possibility of more in the future). These addons include UV Separation, UV Seamless Alignment, and UV Grid Alignment (all of which will be explained in more detail below). NOTE: The UV Seamless Alignment assumes you know the physical size of your texture. This feature is allowed in Substance Printer (I cannot say whether it is allowed in other software, as I only work in Substance Printer for texturing).
 
 ## Project Purpose and Motivation
-This project started as a very simple method for compacting UVs during asset creation in “Cities Skylines II” (which I will refer to as CS2 going forward), a city-building game that lets you create and share assets. One requirement when UV wrapping your asset is that UVs cannot extend beyond the space. Normally, this UV wrapping is usually fine; going over it will just repeat the texture.
+This project started as a very simple method for compacting UVs during asset creation in “Cities Skylines II” (which I will refer to as CS2 going forward), a city-building game that lets you create and share assets. One requirement for UV wrapping your asset is that UVs cannot extend beyond the asset's boundaries. Normally, this UV wrapping is usually fine; going over it will just repeat the texture. 
 
 ### Understanding the point and purpose of this specific addon
-Imagine you are trying to unwrap a UV texture on an asset that is huge, let's say a building. Here is what you might do.
+Imagine you are unwrapping a UV texture, which means flattening a 3D model's surface into a 2D map to apply images, on a large asset, such as a building. Here is what you might do.
 
-<img src="images/first-uv-attempt.png" alt="Alt text" height="400"/>
-<img src="images/first-uv-attempt-3d-view.png" alt="Alt text" height="400"/>
+<div style="display:flex; gap:10px;">
+  <img src="images/first-uv-attempt.png" alt="Alt text" height="400"/>
+  <img src="images/first-uv-attempt-3d-view.png" alt="Alt text" height="400"/>
+</div>
+
+Here we unwrap the UVs, and for my personal use, I have also set the pixel density to be 2.56 px/cm (You do not need to know the pixel density; it is calculated internally to determine proper alignment). Now this texture is a 4k image that repeats every 2 meters by 2 meters. With a texture density of 2.56 px/cm, this means that if we keep the majority of our assets at that texture density, we have 16 meters by 16 meters of texture space. The building's surface exceeds 16 meters by 16 meters. However, as we can see, the UVs are simply too large; they extend beyond the space (not allowed in CS2), and lowering the texture density will result in a blurrier texture.
 
 Another option we could go with is to collapse all UVs so they overlap. This looks like this.
 
-<img src="images/second-uv-attempt.png" alt="Alt text" height="400"/>
-<img src="images/second-uv-attempt-3d-view.png" alt="Alt text" height="400"/>
+<div style="display:flex; gap:10px;">
+  <img src="images/second-uv-attempt.png" alt="Alt text" height="400"/>
+  <img src="images/second-uv-attempt-3d-view.png" alt="Alt text" height="400"/>
+</div>
 
-Here we unwrap the UVs, and for my personal use, I have also set the pixel density to be 2.56 px/cm (You do not need to know the pixel density; it is calculated internally to determine proper alignment). Now this texture is a 4k image that repeats every 2 meters by 2 meters. With a texture density of 2.56 px/cm, this means that if we keep the majority of our assets at that texture density, we have 16 meters by 16 meters of space. However, as we can see, the UVs are simply too large; they extend beyond the space (not allowed in CS2), and lowering the texture density will result in a blurrier texture.
+While this takes up less space, allowing us to easily fit all the UVs, the result in the 3D view is horrible; we can see tons of seams in the texture. By the way, there are assets from the game that have seams (just not as bad as this example). While this looks fine from afar, I find it a little ugly up close, so let's do better than the actual assets in the game. Now, you could custom-create every texture and design the assets in a modular way (a very good way to design buildings, since most buildings are modular in nature), so they snap together with no seams. However, these are CS2 assets that are meant to be viewed from a bird 's-eye view, not GTA 5 graphics. While some seams are fine, we want to eliminate as many seams as possible.
 
 ### Alignment Solution
 
-<img src="images/third-uv-attempt.png" alt="Alt text" height="400"/>
-<img src="images/third-uv-attempt-3d-view.png" alt="Alt text" height="400"/>
+<div style="display:flex; gap:10px;">
+  <img src="images/third-uv-attempt.png" alt="Alt text" height="400"/>
+  <img src="images/third-uv-attempt-3d-view.png" alt="Alt text" height="400"/>
+</div>
 
-This is where the alignment solution comes in. In the image above, we can see something similar to the second attempt: UVs are overlapped; however, in the 3D view, you see no seams. This is because UV Seamless Alignment aligns the UV to minimize seams. NOTE: I originally made this software for myself with the attitude of good-enoughism (yes, I’m aware that enoughism isn’t a word). This means the program has limitations and cannot eliminate all seams in all situations.
+This is where the alignment solution comes in. In the image below, we can see something similar: UVs are overlapped; however, in the 3D view, you see no seams (visible lines in texture caused by shifting UVs). This is because UV Seamless Alignment aligns the UV to minimize seams. NOTE: I originally made this software for myself with the attitude of good-enoughism (yes, I’m aware that enoughism isn’t a word). This means the program has limitations and cannot eliminate all seams in all situations.
+
+In fact, by being smart with our UVs, we can create an entire texture with multiple materials of different sizes that fit the entire build’s UVs.
+
+<div style="display:flex; gap:10px;">
+  <img src="images/building-uvs.png" alt="Alt text" height="600"/>
+  <img src="images/building-3d-view.png" alt="Alt text" width="400"/>
+</div>
+
+Here, we are looking at an entire building, and its UVs fit onto a 4k texture with an average texture density of 2.56 px/cm, which means the area is 16x16 meters. Despite this, we only needed to use about half the texture. Even better, because this image contains large areas that aren't used (the solid colors generated by Substance Painter; you can fix this in Substance Painter), we can take advantage of compression. This entire 4k image (the CS2 guide states to use 4k for large assets, I believe, because of how the virtual texture thing works) takes up a little over 7 MB. To put this into comparison, the 4k texture of just the brick material by itself takes up 66.4 MB.
