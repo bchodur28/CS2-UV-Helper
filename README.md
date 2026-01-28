@@ -1,3 +1,21 @@
+## Table of Contents
+
+- [Summary](#summary)
+- [Terminology](#termology)
+  - [Material Physical Dimensions (Substance Painter)](#material-physical-dimensions-substance-printer)
+  - [Invalid UV Islands](#invalid-uv-islands)
+  - [Valid UV Islands](#valid-uv-islands)
+  - [What Is a UV Island?](#what-is-a-uv-island)
+- [Installation](#installation)
+- [Usagage](#usagage)
+- [Projects Purpose and Motivation](#projects-purpose-and-motivation)
+- [Understanding the Point and Problem This Addon Solves](#understanding-the-point-and-problem-this-addon-solves)
+  - [Keeping the UVs All Connected (One Big UV Island)](#keeping-the-uvs-all-connected-one-big-uv-island)
+  - [Lazily Collapsing All UV Faces](#lazily-callapsing-all-uv-faces)
+  - [Alignment Solution](#alignment-solution)
+
+
+
 ## Summary
 
 This repository contains a simple Blender Python addon for three UV operations: Separation, Seamless Alignment, and Grid Alignment. UV Seamless Alignment requires knowing your texture's physical size, which Substance Printer allows you to set.
@@ -8,10 +26,7 @@ This repository contains a simple Blender Python addon for three UV operations: 
 
 When I talk about the material's physical dimensions, I'm referring to the settings in the Substance Printer. I won’t go into detail about it since documentation already exists. For example, this is a texture with multiple materials of different sizes.
 
-<div style="display:flex; align-items:center;">
-  <img src="images/texture-with-multiple-materials.png" height="400"/>
-</div>
-
+<img src="images/texture-with-multiple-materials.png" height="400"/>
 
 Here, I’ve highlighted three materials with different physical dimensions. This means that as you use the UV alignment and place the UV in its respective spot, you will have to adjust the material length and height in the ‘UV Seamless Alignment’ section, depending on which part of the asset you’re working on.
 
@@ -22,7 +37,6 @@ UV faces that are not quads or have an irregular shape or alignment.
 <div style="display:flex; align-items:center;">
   <img src="images/irregular-and-non-quads.png" height="400"/>
 </div>
-
 
 The UV Island below is invalid because the two faces correspond to faces in the 3D view that are not on the same axis plane. While this would not be a problem if the two faces were on the inside of the island, because they sit on the outside edges of the island, this will mess up the calculation.
 
@@ -39,10 +53,7 @@ The UV Island below is invalid because the two faces correspond to faces in the 
 
 UV faces that are regular, rectangular, and non-irregular. Note, the two UV islands in the second image are faces that point in a different direction in the 3D view (the face lay on a different axis plane) and while this was invalid in the first example, it is valid in this case because they are NOT on the outwards of the island but with in the UV island max and min x and y (UV coordinates) values meaning they will not affect the bounding box calculation.
 
-<div style="display:flex; align-items:center;">
-  <img src="images/valid-uv-islands.png" height="400"/>
-</div>
-
+<img src="images/valid-uv-islands.png" height="400"/>
 
 ### What is a UV Island?
 
@@ -62,21 +73,20 @@ Before starting, make sure you know the most important thing: your material phys
   <img src="images/first-uv-attempt.png" height="400"/>
 </div>
 
-1. Now separate your UVs into valid UV Islands. Depending on how complex the mesh is, you may need to do this manually, or you might be able to use the UV Separation. When separating, separate only one axis at a time. This means that if you are doing manual separation, lock the axis to one at a time by pressing either the x or y key when moving the UV Island. I have the best luck with horizontal first, so I will do that one first.
+2. Now separate your UVs into valid UV Islands. Depending on how complex the mesh is, you may need to do this manually, or you might be able to use the UV Separation. When separating, separate only one axis at a time. This means that if you are doing manual separation, lock the axis to one at a time by pressing either the x or y key when moving the UV Island. I have the best luck with horizontal first, so I will do that one first.
 
 <div style="display:flex; align-items:center;">
-  <img src="images/step-2-uv-seperation.png" height="400"/>
+  <img src="images/step-2-uv-seperation.png" width="600"/>
   <img src="images/seperate-uvs-optons.png" height="400"/>
 </div>
 
-
-1. Now set the ‘Screen Resolution’ to the texture size and both the ‘Material Length’ and Material Height’ to the actual dimensions of the material (set in Substance Printer). In my case, I’m working with a 4k brick texture that repeats every 300 cm in both directions. You may need to adjust the ‘Merge Threshold’.
+3. Now set the ‘Screen Resolution’ to the texture size and both the ‘Material Length’ and Material Height’ to the actual dimensions of the material (set in Substance Printer). In my case, I’m working with a 4k brick texture that repeats every 300 cm in both directions. You may need to adjust the ‘Merge Threshold’.
 
 <div style="display:flex; align-items:center;">
   <img src="images/material-length-height.png" height="400"/>
 </div>
 
-1. Now repeat steps 2 and 3. In my case, I would now do the vertical UV separation (step 3) and then the vertical alignment (step 4).
+4. Now repeat steps 2 and 3. In my case, I would now do the vertical UV separation (step 3) and then the vertical alignment (step 4).
 
 
 ## Project’s Purpose and Motivation
@@ -129,8 +139,10 @@ Here, we are looking at an entire building, and its UVs fit onto a 4k texture wi
 
 <div style="display:flex; align-items:center;">
   <img src="images/building-uvs.png" height="400"/>
-  <img src="images/building-3d-view.png" height="400"/>
+  <img src="images/building-3d-view.png" width="600"/>
 </div>
+
+
 
 
 
