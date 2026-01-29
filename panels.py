@@ -76,8 +76,8 @@ class CS2_PT_MainPanel(bpy.types.Panel):
         # row = layout.row()
         # row.operator("cs2.reload_addon", text="Reload Addon", icon='FILE_REFRESH')
 
-        row = layout.row()
-        row.operator("cs2.new_feature", text="Do Something")
+        # row = layout.row()
+        # row.operator("cs2.new_feature", text="Do Something")
 
 def register():
     bpy.utils.register_class(CS2_PT_MainPanel)
