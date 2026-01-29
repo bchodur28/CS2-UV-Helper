@@ -61,6 +61,8 @@ A ‘UV Island’ is a group of UVs that touch or overlap, determined by ‘Merg
 
 ## Installation
 
+[Click to Download CS2-UV-Helper.zip](CS2-UV-Helper.zip)
+
 Simply download the zip file and install it the same way you would for any other addon by going to Edit → Preferences → Add-ons and selecting ‘Install from Disk...’ and choosing the downloaded zip file.
 
 ## Usagage
