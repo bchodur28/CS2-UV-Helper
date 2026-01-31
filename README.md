@@ -1,13 +1,13 @@
 ## Table of Contents
 
 - [Summary](#summary)
-- [Terminology](#termology)
+- [Terminology](#terminology)
   - [Material Physical Dimensions (Substance Painter)](#material-physical-dimensions-substance-printer)
   - [Invalid UV Islands](#invalid-uv-islands)
   - [Valid UV Islands](#valid-uv-islands)
   - [What Is a UV Island?](#what-is-a-uv-island)
 - [Installation](#installation)
-- [Usagage](#usagage)
+- [Usage](#usage)
 - [Projects Purpose and Motivation](#projects-purpose-and-motivation)
 - [Understanding the Point and Problem This Addon Solves](#understanding-the-point-and-problem-this-addon-solves)
   - [Keeping the UVs All Connected (One Big UV Island)](#keeping-the-uvs-all-connected-one-big-uv-island)
@@ -19,7 +19,7 @@
 
 This repository contains a simple Blender Python addon for three UV operations: Separation, Seamless Alignment, and Grid Alignment. UV Seamless Alignment requires knowing your texture's physical size, which Substance Printer allows you to set.
 
-## Termology
+## Terminology
 
 ### Material Physical Dimensions (Substance Printer)
 
@@ -62,7 +62,7 @@ A ‘UV Island’ is a group of UVs that touch or overlap, determined by ‘Merg
 
 Simply download the zip file and install it the same way you would for any other addon by going to Edit → Preferences → Add-ons and selecting ‘Install from Disk...’ and choosing the downloaded zip file.
 
-## Usagage
+## Usage
 
 Before starting, make sure you know the most important thing: your material physical dimensions. This is needed for proper calculation. As mentioned above, this is a feature Substrance Painter allows you to set. We will use this in Step 3. Also, make sure you have ‘UV Sync Selection’ turned on; it's in the upper-left corner. It’s the icon with two diagonal arrows, side by side and pointing in opposite directions.
 
